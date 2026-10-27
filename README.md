@@ -4,6 +4,14 @@ My internet would sometimes lag or drop for a few seconds, and by the time I che
 
 SignalProof is a local Python application with a browser dashboard. It runs lightweight connection checks in the background and stores the results in SQLite. I can also run a separate speed and latency test when I need one. The speed test **never starts automatically**.
 
+## Platform support
+
+- **macOS:** The local Python app is working. A standalone installer is still being developed.
+- **Windows:** Coming soon.
+- **Linux:** Coming soon.
+
+The browser demo is available to everyone, but uses sample measurements instead of testing the visitor's connection.
+
 ## What it does
 
 - Checks two external TCP endpoints and, when possible, my default gateway.

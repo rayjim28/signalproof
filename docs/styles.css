@@ -37,3 +37,20 @@
 .sample-banner span {flex:1;}
 .sample-banner a {color:#86e7ff; font-weight:700; white-space:nowrap;}
 @media(max-width:700px) {.sample-banner {padding:11px 15px; gap:8px; flex-wrap:wrap;} .sample-banner a{margin-left:auto;} }
+
+.platform-support{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px 22px;
+  padding:12px 24px;
+  background:#0b1d2d;
+  border-bottom:1px solid #244459;
+  color:#a9c5d6;
+  font-size:11px;
+}
+.platform-support strong{
+  color:#67d8f2;
+  letter-spacing:1px;
+  font-size:10px;
+}
