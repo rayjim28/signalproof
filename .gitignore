@@ -25,3 +25,10 @@ venv/
 
 # macOS
 .DS_Store
+
+# macOS build files
+.build-venv/
+.icon-build/
+build/
+dist/
+*.spec

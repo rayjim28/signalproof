@@ -60,8 +60,8 @@ class PerformanceTests(unittest.TestCase):
             if len(calls) == 1:
                 raise HTTPError(request.full_url, 403, 'Forbidden', {}, None)
             return Response()
-        with patch('performance.platform.system', return_value='Linux'), \
         with patch('performance.DOWNLOAD_BYTES', 16), \
+             patch('performance.platform.system', return_value='Linux'), \
              patch('performance.urlopen', side_effect=fake_open):
             mbps, size, provider = performance.check_download()
         self.assertEqual(size, 16)

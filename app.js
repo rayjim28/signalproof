@@ -406,3 +406,27 @@ $('start-performance').addEventListener('click', async () => {
 });
 refreshPerformance();
 setInterval(refreshPerformance, 2500);
+
+
+// The packaged desktop app keeps its local agent running independently of browser tabs.
+// Show Quit only when served by that packaged app, not by python3 app.py or GitHub Pages.
+const quitAppButton = $('quit-app');
+async function discoverDesktopControls() {
+  try {
+    const response = await fetch('/api/desktop/status', {cache:'no-store'});
+    if (response.ok && (await response.json()).desktop === true) {
+      quitAppButton.hidden = false;
+    }
+  } catch (_) { /* The browser/demo version has no desktop-only controls. */ }
+}
+quitAppButton.addEventListener('click', async () => {
+  if (!window.confirm('Quit SignalProof? Continuous monitoring will stop until you reopen the app.')) return;
+  try {
+    await post('/api/desktop/quit');
+    quitAppButton.disabled = true;
+    toast('SignalProof stopped. You can close this tab.');
+  } catch (error) {
+    toast(`Could not quit SignalProof: ${error.message}`, true);
+  }
+});
+discoverDesktopControls();
