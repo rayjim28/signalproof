@@ -91,3 +91,11 @@ All saved results are local. The application binds to `127.0.0.1` instead of ope
 ## What I want to improve next
 
 I'd like to compare local gateway reliability against remote endpoint failures more carefully and add optional alerts. A public portfolio demo will need sample data because a hosted app cannot directly monitor someone else's home connection.
+
+## Browser demo
+
+I put together a public demo so people can explore SignalProof without installing Python. It has sample connection history, incidents, and performance results. The controls let visitors browse example data, but the demo does not run tests against their networks.
+
+[Try the demo](https://rayjim28.github.io/signalproof/)
+
+The local Python application is the part that measures a real connection and saves its history.

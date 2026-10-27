@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08111e">
+  <meta name="description" content="Explore the SignalProof network monitoring interface using labeled, synthetic sample data. No device access.">
+  <title>SignalProof — Network Operations</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./demo-api.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<div class="sample-banner" role="status"><strong>PUBLIC DEMO</strong><span>All readings and incidents on this page are synthetic examples. No monitoring agent or speed test is running.</span><a href="https://github.com/rayjim28/signalproof" target="_blank" rel="noopener noreferrer">Source code ↗</a></div>
+<div class="app-shell">
+  <aside class="rail">
+    <a href="#overview" class="symbol" aria-label="SignalProof Home">
+      <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M3 24h9l5-14 8 23 5-12h7" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <div class="rail-nav">
+      <a href="#overview" class="rail-link active" data-nav="overview" aria-label="Overview" title="Overview"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.7"/><rect x="13" y="3" width="8" height="8" rx="1.7"/><rect x="3" y="13" width="8" height="8" rx="1.7"/><rect x="13" y="13" width="8" height="8" rx="1.7"/></svg></a>
+      <a href="#performance" class="rail-link" data-nav="performance" aria-label="Performance" title="Manual speed and gaming checks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18a9 9 0 1 1 16 0M12 13l4-5M12 13l-2 4"/><circle cx="12" cy="13" r="1"/></svg></a>
+      <a href="#telemetry" class="rail-link" data-nav="telemetry" aria-label="Telemetry" title="Telemetry"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 14h5l3-8 4 13 3-7h5"/></svg></a>
+      <a href="#events" class="rail-link" data-nav="events" aria-label="Events" title="Events"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l4 2"/><path d="M17 3h4v4"/></svg></a>
+      <a href="#evidence" class="rail-link" data-nav="evidence" aria-label="Evidence" title="Evidence"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M14 3v5h5M9 12h6M9 16h6"/></svg></a>
+    </div>
+    <div class="rail-foot" title="Public demo · sample data"><span class="mini-led" id="rail-led"></span><span class="rail-version">DEMO</span></div>
+  </aside>
+
+  <div class="workplace">
+    <header class="topbar">
+      <div class="topbar-left"><span class="logo-word">SIGNAL<span>PROOF</span></span><span class="top-divider"></span><span class="product-caption">NETWORK OBSERVABILITY</span></div>
+      <div class="topbar-right"><span class="local-tag">PUBLIC DEMO · SAMPLE DATA</span><span class="top-separator">/</span><span id="clock" class="top-time">--:--:--</span><span id="agent-pill" class="agent-pill"><span class="pill-dot"></span> CHECKING</span></div>
+    </header>
+
+    <main class="page" id="overview">
+      <section class="intro">
+        <div><div class="breadcrumb">WORKSPACE <span>/</span> NETWORK OVERVIEW</div><h1>Connection issues. <span>Under the microscope.</span></h1><p>Explore a sample network history, incidents, and performance results. This demo cannot see your network.</p></div>
+        <div class="intro-actions"><button id="manual-check" class="button-primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15 6.7M3 12a9 9 0 0 1 15-6.7"/><path d="M3 17v-5h5M21 7v5h-5"/></svg><span>Load sample check</span></button><button id="monitor-toggle" class="button-secondary" type="button">Pause demo</button><button id="open-settings" class="button-secondary" type="button" aria-haspopup="dialog">Settings</button></div>
+      </section>
+
+      <section class="network-stage" aria-label="Live network status">
+        <div class="stage-glow"></div><div class="stage-lines"></div>
+        <div class="stage-left"><div class="label-tech"><span class="live-ring" id="live-ring"></span> CONNECTION / LATEST CHECKS</div><div class="stage-state" id="hero-state">COLLECTING<span> DATA</span></div><p id="hero-desc">Waiting for the first network measurements.</p><div class="last-check"><span class="tiny-square"></span> LAST CHECK <strong id="last-check">—</strong></div></div>
+        <div class="network-route" aria-label="Connection path"><div class="network-node"><div class="node-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 28v-7h22v7M11 28h26v10H11zM17 33h1M24 33h1M31 33h1M24 12v9"/></svg></div><span>THIS DEVICE</span><small>LOCAL AGENT</small></div><div class="wire"><span class="wire-signal"></span></div><div class="network-node"><div class="node-icon" id="router-node"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="26" width="32" height="12" rx="3"/><path d="M17 26v-9M31 26v-9M12 15a18 18 0 0 1 24 0M17 20a10 10 0 0 1 14 0"/><circle cx="16" cy="32" r="1" fill="currentColor" stroke="none"/></svg></div><span>GATEWAY</span><small id="router-label">DETECTING…</small></div><div class="wire"><span class="wire-signal"></span></div><div class="network-node"><div class="node-icon" id="internet-node"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M7 24h34M24 7c-5 5-7 11-7 17s2 12 7 17M24 7c5 5 7 11 7 17s-2 12-7 17"/></svg></div><span>ENDPOINT</span><small>2 TCP TARGETS</small></div></div>
+        <div class="scan-number" aria-hidden="true">01 / NETWORK</div>
+      </section>
+
+      <section class="telemetry-strip" aria-label="Measured indicators">
+        <div class="telemetry-item"><div class="metric-caption">PRIMARY SUCCESS RATE <span class="metric-dot cyan"></span></div><div class="metric-value" id="success-rate">—</div><div class="metric-foot" id="sample-count">No internet checks yet</div></div>
+        <div class="telemetry-item"><div class="metric-caption">AVG TCP CONNECT <span class="metric-dot purple"></span></div><div class="metric-value" id="average-latency">—</div><div class="metric-foot">Connected checks only</div></div>
+        <div class="telemetry-item"><div class="metric-caption">PRIMARY FAILURES <span class="metric-dot orange"></span></div><div class="metric-value" id="failed-count">—</div><div class="metric-foot">1.1.1.1 / selected period</div></div>
+        <div class="telemetry-item"><div class="metric-caption">GATEWAY RESPONSE <span class="metric-dot blue"></span></div><div class="metric-value" id="gateway-rate">—</div><div class="metric-foot" id="gateway-caption">ICMP echo (if available)</div></div>
+      </section>
+
+      <section class="surface performance" id="performance" aria-label="Manual connection performance test">
+        <div class="section-top performance-head">
+          <div><div class="section-kicker">MANUAL / CONNECTION PERFORMANCE</div><h2>Performance lab</h2><p>Explore a recorded example. This public demo does not test your internet or run anything in the background.</p></div>
+          <div class="performance-actions"><label for="ping-target">PING TARGET<select id="ping-target"><option value="cloudflare">Cloudflare · 1.1.1.1</option><option value="google">Google · 8.8.8.8</option><option value="quad9">Quad9 · 9.9.9.9</option></select></label><button class="button-primary" type="button" id="start-performance">Load sample test</button></div>
+        </div>
+        <div class="performance-progress" id="performance-progress" role="status" aria-live="polite">Explore the example results below, or load another sample. No speed test will run.</div>
+        <div class="performance-grid">
+          <div class="performance-metric"><span>DOWNLOAD</span><strong id="perf-download">—</strong><small>Mbps · synthetic example</small></div>
+          <div class="performance-metric"><span>UPLOAD</span><strong id="perf-upload">—</strong><small>Mbps · synthetic example</small></div>
+          <div class="performance-metric"><span>GAMING LATENCY EST.</span><strong id="perf-ping">—</strong><small>ms · example endpoint</small></div>
+          <div class="performance-metric"><span>JITTER EST.</span><strong id="perf-jitter">—</strong><small>ms · example variation</small></div>
+          <div class="performance-metric"><span>PACKET LOSS</span><strong id="perf-loss">—</strong><small>% · example probes</small></div>
+        </div>
+        <div class="performance-bottom"><div><strong id="perf-last-label">Loading sample results</strong><p id="perf-note">Manual tests only. On Mac, the native download test may transfer significantly more than 15 MB. Game-server ping is not measured directly.</p></div><a href="/api/performance/export" class="button-report" download>Export test history</a></div>
+        <div class="performance-history"><div class="section-kicker">RECENT MANUAL TESTS</div><div class="table-scroll"><table><thead><tr><th>TIME</th><th>ENDPOINT</th><th>DOWNLOAD</th><th>UPLOAD</th><th>PING</th><th>LOSS</th><th>STATUS</th></tr></thead><tbody id="performance-rows"><tr><td colspan="7" class="placeholder-cell">No manual tests recorded.</td></tr></tbody></table></div></div>
+      </section>
+
+      <section class="assessment" id="assessment" aria-label="Network assessment">
+        <div class="assessment-heading"><span class="assessment-mark" id="assessment-mark"></span><div><span class="section-kicker">NETWORK ASSESSMENT</span><h2 id="assessment-title">Checking both endpoints…</h2></div></div>
+        <div class="assessment-body"><p id="assessment-detail">Waiting for a fresh comparison.</p><p class="assessment-next"><strong>Next step:</strong> <span id="assessment-next">Keep the agent running to build a history.</span></p></div>
+        <div class="endpoint-status"><span id="primary-status">PRIMARY / WAITING</span><span id="secondary-status">SECONDARY / WAITING</span></div>
+      </section>
+
+      <div class="analysis-layout">
+        <section class="surface telemetry" id="telemetry"><div class="section-top"><div><div class="section-kicker">01 / TELEMETRY</div><h2>Latency trace</h2><p>TCP connect time to 1.1.1.1:443. Failed connections are marked separately.</p></div><div class="time-select" role="group" aria-label="Reporting period"><button type="button" data-period="1h">1H</button><button type="button" class="selected" data-period="6h">6H</button><button type="button" data-period="24h">24H</button><button type="button" data-period="7d">7D</button></div></div>
+          <div class="chart-meta"><div class="chart-number" id="chart-number">— <span>ms</span></div><div class="chart-caption">MOST RECENT SUCCESSFUL CONNECT</div><div class="chart-legend"><span><i class="legend-line"></i> TCP connect</span><span><i class="legend-failure"></i> Failed probe</span></div></div>
+          <div class="chart-wrap" id="chart-wrap"><svg id="latency-chart" class="chart" viewBox="0 0 760 272" preserveAspectRatio="none" role="img" aria-label="TCP connection latency history"></svg><div class="chart-empty" id="chart-empty">Preparing synthetic sample measurements…</div></div><div class="chart-bottom"><span id="range-start">—</span><span>Filters update the sample history</span><span id="range-end">—</span></div>
+          <div class="trace-note"><span class="info-icon">i</span> TCP connection time is <strong>not</strong> a broadband speed test or ICMP round-trip time. We compare two destinations for availability; this graph shows the primary endpoint.</div>
+        </section>
+        <section class="surface events" id="events"><div class="section-top"><div><div class="section-kicker">02 / EVENT STREAM</div><h2>Confirmed incidents</h2><p id="incident-rule">Two failed rounds confirm an incident. Two reachable rounds close it.</p></div><span class="event-count" id="event-count">0 events</span></div><div id="event-list" class="event-list"><div class="event-empty">Events will appear as SignalProof collects evidence.</div></div><div class="event-bottom"><span class="mini-led"></span> Incidents document two failed TCP endpoints—not confirmed ISP outages.</div></section>
+      </div>
+
+      <section class="surface history" id="history" aria-label="Incident analysis">
+        <div class="section-top history-heading"><div><div class="section-kicker">03 / HISTORY</div><h2>Incident analysis</h2><p>Confirmed interruptions and observed spans across the selected time range.</p></div><a class="button-report" id="incidents-download" href="/api/incidents/export?period=6h" download>Export incidents</a></div>
+        <div class="history-metrics">
+          <div><span>CONFIRMED THIS PERIOD</span><strong id="history-confirmed">—</strong><small>Started in selected range</small></div>
+          <div><span>RECOVERED</span><strong id="history-recovered">—</strong><small>From those incidents</small></div>
+          <div><span>LONGEST RESOLVED</span><strong id="history-longest">—</strong><small>Observed start to recovery</small></div>
+          <div><span>OBSERVED INCIDENT SPAN</span><strong id="history-observed">—</strong><small>Combined within this range</small></div>
+        </div>
+        <div class="table-scroll"><table><thead><tr><th>FIRST FAILURE</th><th>CONFIRMED</th><th>STATUS</th><th>OBSERVED SPAN</th></tr></thead><tbody id="incident-rows"><tr><td colspan="4" class="placeholder-cell">Incident history will appear here.</td></tr></tbody></table></div>
+        <div class="history-note">The duration is calculated from recorded checks, not measured continuous downtime. It cannot establish ISP responsibility.</div>
+      </section>
+
+      <section class="surface evidence" id="evidence"><div class="section-top evidence-title"><div><div class="section-kicker">04 / EVIDENCE</div><h2>Diagnostic ledger</h2><p>A sample evidence trail. Nothing is collected from your device.</p></div><div class="evidence-actions"><a class="button-report" id="report" href="/api/report?period=6h" target="_blank" rel="noopener">Print report</a><a class="button-download" id="download" href="/api/export?period=6h" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg> Export CSV</a></div></div>
+        <div class="ledger-toolbar"><div class="tab-group" role="group" aria-label="Filter measurements"><button type="button" class="selected" data-filter="All">All checks</button><button type="button" data-filter="Internet">Primary</button><button type="button" data-filter="Secondary">Secondary</button><button type="button" data-filter="Gateway">Gateway</button></div><div class="ledger-meta" id="ledger-meta">Loading history…</div></div>
+        <div class="table-scroll"><table><thead><tr><th>TIMESTAMP</th><th>TEST</th><th>RESULT</th><th>CONNECT TIME</th><th>METHOD</th></tr></thead><tbody id="evidence-rows"><tr><td colspan="5" class="placeholder-cell">Collecting measurements…</td></tr></tbody></table></div><div class="ledger-footer"><span id="ledger-showing">—</span><button type="button" id="rows-toggle" class="rows-toggle" hidden>Show more records</button></div>
+      </section>
+      <footer><span>◈ SIGNALPROOF <b>PUBLIC DEMO</b></span><span>Demo only. No real network tests or personal data collection.</span><span>Built for evidence, not guesswork.</span></footer>
+    </main>
+  </div>
+</div>
+<dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-heading">
+  <form method="dialog" id="settings-form">
+    <div class="settings-top"><div><div class="section-kicker">AGENT CONFIGURATION</div><h2 id="settings-heading">Monitoring settings</h2><p>Demo-only settings, reset when you reload this page.</p></div><button type="button" id="close-settings" class="settings-close" aria-label="Close settings">×</button></div>
+    <label>Check interval <span>How often the agent runs automatically</span>
+      <select id="setting-interval" name="interval_seconds"><option value="10">Every 10 seconds</option><option value="20">Every 20 seconds</option><option value="30">Every 30 seconds</option><option value="60">Every minute</option><option value="120">Every 2 minutes</option></select>
+    </label>
+    <label>Confirm an incident <span>Consecutive rounds where both internet checks fail</span>
+      <select id="setting-failures" name="confirm_failures"><option value="2">2 failed rounds</option><option value="3">3 failed rounds</option><option value="4">4 failed rounds</option><option value="5">5 failed rounds</option></select>
+    </label>
+    <label>Mark recovery <span>Consecutive rounds where at least one endpoint responds</span>
+      <select id="setting-recovery" name="recovery_successes"><option value="1">1 reachable round</option><option value="2">2 reachable rounds</option><option value="3">3 reachable rounds</option><option value="4">4 reachable rounds</option></select>
+    </label>
+    <label>Slow connection warning <span>TCP connect time, not ping or download speed</span>
+      <select id="setting-slow" name="slow_connect_ms"><option value="100">100 ms</option><option value="200">200 ms</option><option value="300">300 ms</option><option value="500">500 ms</option><option value="1000">1000 ms</option></select>
+    </label>
+    <div class="settings-hint">The demo uses invented results for these sample targets. Settings do not affect a real network.</div>
+    <div class="settings-buttons"><button type="button" id="cancel-settings" class="button-secondary">Cancel</button><button type="submit" id="save-settings" class="button-primary">Save settings</button></div>
+  </form>
+</dialog>
+<div role="status" aria-live="polite" id="toast" class="toast" hidden></div>
+</body>
+</html>
