@@ -1,6 +1,8 @@
 """Start SignalProof from Finder and keep local monitoring under user control."""
 
 import logging
+import errno
+import json
 from contextlib import closing
 import os
 import signal
@@ -10,7 +12,7 @@ import subprocess
 import threading
 import time
 from pathlib import Path
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 from urllib.parse import urlparse
 
 APP_NAME = "SignalProof"
@@ -60,13 +62,42 @@ def prompt(message, buttons=("Quit SignalProof", "Open Dashboard")):
     return proc.stdout.strip()
 
 
+def show_dashboard(port):
+    """Bring the web dashboard forward without launching another local server."""
+    subprocess.Popen(["/usr/bin/open", f"http://127.0.0.1:{port}/"])
+
+
+def existing_desktop_agent(port, attempts=12):
+    """Only reuse a port if it responds as the SignalProof desktop agent.
+
+    A different local web server (including a developer run of app.py) must
+    never be mistaken for the packaged desktop application. Brief retries
+    allow a concurrently launched instance time to finish starting up.
+    """
+    url = f"http://127.0.0.1:{port}/api/desktop/status"
+    for attempt in range(attempts):
+        try:
+            req = Request(url, headers={"Accept": "application/json", "Cache-Control": "no-cache"})
+            with urlopen(req, timeout=0.7) as response:
+                content_type = response.headers.get("Content-Type", "")
+                if response.status != 200 or "application/json" not in content_type.lower():
+                    return False
+                status = json.loads(response.read(512))
+                return isinstance(status, dict) and status.get("desktop") is True
+        except (OSError, ValueError, UnicodeError):
+            # A second instance may be in the process of starting its HTTP server.
+            if attempt + 1 < attempts:
+                time.sleep(0.2)
+    return False
+
+
 def open_dashboard(port):
     url = f"http://127.0.0.1:{port}/"
     for _ in range(25):
         try:
             with urlopen(url, timeout=1) as response:
                 if response.status == 200:
-                    subprocess.Popen(["/usr/bin/open", url])
+                    show_dashboard(port)
                     return
         except OSError:
             time.sleep(0.2)
@@ -122,9 +153,19 @@ def run():
     try:
         server = ThreadingHTTPServer(("127.0.0.1", port), handler)
     except OSError as exc:
+        # Reopening the app must not create a second monitoring agent or block
+        # the user with a port error when SignalProof is already running.
+        if exc.errno == errno.EADDRINUSE and existing_desktop_agent(port):
+            logging.info("SignalProof is already running; reopening its dashboard")
+            try:
+                show_dashboard(port)
+            except OSError as open_error:
+                logging.error("Could not reopen existing dashboard: %s", open_error)
+                prompt("SignalProof is running, but its dashboard could not be opened.", ("Close",))
+            return
         logging.error("Could not start local server: %s", exc)
         prompt(
-            f"Port {port} is already in use. Stop SignalProof in Terminal or close the other instance, then reopen this app.",
+            f"Could not start SignalProof on port {port}. Another app may be using this port. Close it and try again.",
             ("Close",),
         )
         return
