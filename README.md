@@ -12,6 +12,25 @@ SignalProof is a local Python application with a browser dashboard. It runs ligh
 
 The browser demo is available to everyone, but uses sample measurements instead of testing the visitor's connection.
 
+<!-- SIGNALPROOF_MACOS_BETA_START -->
+## Download the macOS beta
+
+**SignalProof v0.1.0 Beta** is available for Apple Silicon Macs (M-series chips). This is the actual local desktop monitoring app, not the sample-data browser demo.
+
+**[Get the macOS beta on GitHub Releases](https://github.com/rayjim28/signalproof/releases/tag/v0.1.0-beta.1)**
+
+1. On the release page, expand **Assets** and download the macOS ZIP whose name ends in `UNNOTARIZED.zip` (not the `.sha256` checksum or GitHub's source-code ZIP).
+2. Extract the ZIP and move `SignalProof.app` into **Applications**.
+3. Open SignalProof. If macOS blocks it, after attempting to open it visit **System Settings → Privacy & Security**, find the SignalProof notice, and select **Open Anyway** *only if you trust the download*.
+4. Use the local dashboard to run diagnostics and manual performance tests. Use **Quit app** when you want to stop the local monitoring agent.
+
+**Important:** This beta is not Developer ID signed or notarized by Apple. No paid Apple developer membership or Python installation is required to run the packaged application, but some Macs may require a manual security exception. Do not disable macOS security globally. The standalone download currently targets Apple Silicon only; Windows and Linux are coming soon.
+
+The hosted [browser demo](https://rayjim28.github.io/signalproof/) displays example measurements. It **does not** measure the visitor's internet connection. The installed desktop app monitors the local connection.
+
+Found a problem? [Report a bug on GitHub Issues](https://github.com/rayjim28/signalproof/issues/new/choose). Please remove private information (including public IP addresses) from screenshots and logs.
+<!-- SIGNALPROOF_MACOS_BETA_END -->
+
 ## What it does
 
 - Checks two external TCP endpoints and, when possible, my default gateway.
