@@ -6,7 +6,7 @@ SignalProof is a local Python application with a browser dashboard. It runs ligh
 
 ## Platform support
 
-- **macOS:** The local Python app is working. A standalone installer is still being developed.
+- **macOS:** Beta 2 available for Apple Silicon (unsigned and unnotarized).
 - **Windows:** Coming soon.
 - **Linux:** Coming soon.
 
@@ -15,9 +15,9 @@ The browser demo is available to everyone, but uses sample measurements instead 
 <!-- SIGNALPROOF_MACOS_BETA_START -->
 ## Download the macOS beta
 
-**SignalProof v0.1.0 Beta** is available for Apple Silicon Macs (M-series chips). This is the actual local desktop monitoring app, not the sample-data browser demo.
+**SignalProof v0.1.0 Beta 2** is available for Apple Silicon Macs (M-series chips). This is the actual local desktop monitoring app, not the sample-data browser demo.
 
-**[Get the macOS beta on GitHub Releases](https://github.com/rayjim28/signalproof/releases/tag/v0.1.0-beta.1)**
+**[Get the macOS beta on GitHub Releases](https://github.com/rayjim28/signalproof/releases/tag/v0.1.0-beta.2)**
 
 1. On the release page, expand **Assets** and download the macOS ZIP whose name ends in `UNNOTARIZED.zip` (not the `.sha256` checksum or GitHub's source-code ZIP).
 2. Extract the ZIP and move `SignalProof.app` into **Applications**.

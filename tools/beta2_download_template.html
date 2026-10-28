@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08111e">
+  <meta name="description" content="Download the SignalProof macOS Apple Silicon beta and view installation instructions.">
+  <title>Download SignalProof — macOS Beta</title>
+  <style>
+    :root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:dark;background:#071320;color:#e9f4ff}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse 70% 45% at 75% 0%,#103c4c 0%,transparent 80%),#071320;min-height:100vh}
+    a{color:inherit}.wrap{max-width:960px;margin:auto;padding:34px 24px 72px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:5px 0 70px;border-bottom:1px solid #1b3b4b}
+    .brand{color:#effaff;font-weight:850;letter-spacing:2px;text-decoration:none;font-size:16px}.brand span{color:#65e4dc}
+    .back{color:#a5c3d0;font-size:13px;text-decoration:none}.back:hover{color:#71f2e7}
+    .eyebrow{color:#65e4dc;font-size:11px;letter-spacing:2px;font-weight:750;margin-top:62px}
+    h1{font-size:clamp(36px,6vw,62px);line-height:1.07;max-width:750px;letter-spacing:-2px;margin:14px 0 19px}h1 em{font-style:normal;color:#6be1d8}
+    .intro{max-width:630px;line-height:1.7;color:#a2bbc9;font-size:16px;margin-bottom:40px}
+    .platforms{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:14px}
+    .platform{border:1px solid #264658;border-radius:15px;background:#0c2030;padding:23px;min-height:200px}
+    .platform.primary{background:linear-gradient(145deg,#113b44,#102532);border-color:#377a83}
+    .kicker{color:#91afc1;font-size:11px;text-transform:uppercase;letter-spacing:1.5px}.platform h2{font-size:23px;margin:16px 0 12px;letter-spacing:-.5px}
+    .platform p{font-size:13px;line-height:1.6;color:#afc6d1;margin:0 0 23px}
+    .status{display:inline-block;font-size:11px;letter-spacing:.3px;border:1px solid #47656f;border-radius:30px;padding:7px 11px;color:#bdccd6}
+    .primary .status{border-color:#477e82;color:#79eadd}
+    .cta{display:inline-block;padding:12px 16px;border-radius:8px;text-decoration:none;background:#67ddcf;color:#05262d;font-size:13px;font-weight:750}
+    .cta:hover{background:#9ff5ec}.secondary-link{display:inline-block;margin-left:12px;color:#b4d3e0;text-decoration:underline;text-underline-offset:3px;font-size:13px}.note{margin-top:32px;padding:20px 22px;border:1px solid #254251;border-radius:13px;background:#0b2030;color:#aec2ce;line-height:1.7;font-size:13px}
+    .note strong{color:#ebf7fc}footer{margin-top:55px;color:#7898aa;font-size:12px}
+    @media(max-width:700px){header{padding-bottom:37px}.eyebrow{margin-top:40px}.platforms{grid-template-columns:1fr}.platform{min-height:0}h1{letter-spacing:-1.4px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><a class="brand" href="./index.html">SIGNAL<span>PROOF</span></a><a class="back" href="./index.html">Back to live demo</a></header>
+    <div class="eyebrow">APPLICATION / DISTRIBUTION</div>
+    <h1>Real diagnostics.<br><em>On your computer.</em></h1>
+    <p class="intro">The public demo shows sample connection data. The installed SignalProof app measures your own connection, stores incidents locally, and runs speed tests only when you start them.</p>
+    <section class="platforms" aria-label="Platform availability">
+      <div class="platform primary">
+        <div class="kicker">Desktop application · Apple Silicon</div>
+        <h2>macOS</h2>
+        <p>SignalProof v0.1.0 Beta 2 is available for Apple Silicon Macs (M1 and newer). Download the real app to monitor your own connection locally. No Python installation required.</p>
+        <a class="cta" href="https://github.com/rayjim28/signalproof/releases/tag/v0.1.0-beta.2" target="_blank" rel="noopener noreferrer" aria-label="Get SignalProof for macOS from GitHub Releases">Get macOS Beta ↗</a>
+        <span class="status" style="margin-left:9px">Public beta</span>
+      </div>
+      <div class="platform"><div class="kicker">Desktop application</div><h2>Windows</h2><p>Not available yet. Windows diagnostics and packaging still need development and testing.</p><span class="status">Coming soon</span></div>
+      <div class="platform"><div class="kicker">Desktop application</div><h2>Linux</h2><p>Not available yet. Linux diagnostics and packaging still need development and testing.</p><span class="status">Coming soon</span></div>
+    </section>
+    <aside class="note"><strong>Install SignalProof on macOS:</strong> Select <strong>Get macOS Beta</strong>, download the <code>UNNOTARIZED.zip</code> file from GitHub's <strong>Assets</strong> section (not the <code>.sha256</code> checksum or source-code ZIP), extract it, and move <code>SignalProof.app</code> to Applications. Open it normally. If macOS blocks it, choose <strong>Done</strong>, then go to <strong>System Settings → Privacy &amp; Security</strong> and select <strong>Open Anyway</strong> for SignalProof. Only approve apps you trust; never disable macOS security globally.<p style="margin:14px 0 0"><strong>Beta security notice:</strong> This release is not signed with an Apple Developer ID certificate or notarized by Apple. Currently for Apple Silicon Macs only. Testing on additional Macs is ongoing. <a href="https://github.com/rayjim28/signalproof/issues" target="_blank" rel="noopener noreferrer">Report a problem</a>.</p></aside>
+    <footer>SignalProof · Python network diagnostics · Sample data is clearly labeled in the browser demo.</footer>
+  </div>
+</body>
+</html>
