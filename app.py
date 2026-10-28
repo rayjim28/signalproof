@@ -18,6 +18,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from performance import PerformanceRunner, create_table
+from quality_signals import summarize_quality
 from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parent
@@ -290,6 +291,7 @@ def get_data(window="6h"):
     settings = get_settings()
     with connection() as db:
         history = incident_history(db, since)
+        quality = summarize_quality(db, since, settings)
         records = [dict(row) for row in db.execute(
             "SELECT id,checked_at,target,online,latency_ms,detail FROM measurements "
             "WHERE checked_at>=? ORDER BY id DESC LIMIT 900", (since,)
@@ -319,6 +321,7 @@ def get_data(window="6h"):
               ("Internet", "Secondary", "Gateway")}
     return {
         "records": records,
+        "quality": quality,
         "stats": stats,
         "diagnosis": diagnosis(stats, state, latest, latest.get("Gateway"), settings),
         "incidents": incidents,

@@ -75,6 +75,16 @@
         <div class="endpoint-status"><span id="primary-status">PRIMARY / WAITING</span><span id="secondary-status">SECONDARY / WAITING</span></div>
       </section>
 
+      <section class="surface quality" id="quality" aria-label="Automatic connection quality evidence">
+        <div class="section-top"><div><div class="section-kicker">AUTOMATIC / QUALITY EVIDENCE</div><h2>Connection quality</h2><p>Based on saved primary TCP checks, not download speed or game-server ping. Uses the selected time range.</p></div></div>
+        <div class="quality-metrics">
+          <div class="quality-metric"><span>95TH-PERCENTILE TCP CONNECT</span><strong id="quality-p95">—</strong><small>Higher-end connection setup time in this window</small></div>
+          <div class="quality-metric"><span>SLOW CHECKS</span><strong id="quality-slow">—</strong><small id="quality-slow-caption">Using your slow-check setting</small></div>
+          <div class="quality-metric"><span>LATENCY SPIKES</span><strong id="quality-spikes">—</strong><small id="quality-spike-caption">Needs a baseline of successful checks</small></div>
+        </div>
+        <div class="quality-trail"><div><div class="section-kicker">RECENT SPIKES</div><p>High TCP connect times are clues, not proof your ISP caused a problem.</p></div><div id="quality-spike-list" class="quality-spike-list"><p class="quality-empty">Collecting measurements…</p></div></div>
+      </section>
+
       <div class="analysis-layout">
         <section class="surface telemetry" id="telemetry"><div class="section-top"><div><div class="section-kicker">01 / TELEMETRY</div><h2>Latency trace</h2><p>TCP connect time to 1.1.1.1:443. Failed connections are marked separately.</p></div><div class="time-select" role="group" aria-label="Reporting period"><button type="button" data-period="1h">1H</button><button type="button" class="selected" data-period="6h">6H</button><button type="button" data-period="24h">24H</button><button type="button" data-period="7d">7D</button></div></div>
           <div class="chart-meta"><div class="chart-number" id="chart-number">— <span>ms</span></div><div class="chart-caption">MOST RECENT SUCCESSFUL CONNECT</div><div class="chart-legend"><span><i class="legend-line"></i> TCP connect</span><span><i class="legend-failure"></i> Failed probe</span></div></div>

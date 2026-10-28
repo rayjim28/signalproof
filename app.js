@@ -162,6 +162,33 @@ function renderAssessment(data) {
     element.className = !last ? '' : last.online ? 'endpoint-ok' : 'endpoint-fail';
   }
 }
+function renderQuality(data) {
+  const quality = data.quality;
+  if (!quality) return;
+  $('quality-p95').textContent = quality.p95_ms == null ? '—' : `${number(quality.p95_ms)} ms`;
+  $('quality-slow').textContent = String(quality.slow_checks);
+  $('quality-spikes').textContent = quality.spike_threshold_ms == null ? '—' : String(quality.spike_count);
+  $('quality-slow-caption').textContent = `Successful TCP checks ≥ ${quality.slow_threshold_ms} ms`;
+  $('quality-spike-caption').textContent = quality.spike_threshold_ms == null
+    ? 'Needs at least 5 timed checks for a baseline'
+    : `At least ${number(quality.spike_threshold_ms)} ms · 2× median or slow threshold`;
+  const list = $('quality-spike-list'); list.replaceChildren();
+  if (!quality.recent_spikes.length) {
+    const message = document.createElement('p');
+    message.className = 'quality-empty';
+    message.textContent = quality.spike_threshold_ms == null
+      ? 'Collecting a baseline. Run diagnostics or leave the agent monitoring.'
+      : 'No unusual TCP connection spikes detected in this period.';
+    list.append(message);
+  } else {
+    for (const spike of quality.recent_spikes) {
+      const item = document.createElement('div'); item.className = 'quality-spike';
+      const when = document.createElement('time'); when.textContent = dateFor(spike.checked_at);
+      const value = document.createElement('strong'); value.textContent = `${number(spike.latency_ms)} ms`;
+      item.append(when,value); list.append(item);
+    }
+  }
+}
 function renderEvents(data) {
   const found = [];
   for (const incident of data.incidents) {
@@ -260,6 +287,7 @@ function render(data) {
   state.data=data;
   updateSummary(data);
   renderAssessment(data);
+  renderQuality(data);
   chart(data);
   renderEvents(data);
   renderHistory(data);
