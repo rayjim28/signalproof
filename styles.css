@@ -45,3 +45,22 @@
 .performance-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:20px}.performance-bottom strong{font:11px var(--mono);color:#d5e8f5}.performance-bottom p{margin:7px 0 0;color:#7896ac;font-size:10px;line-height:1.7;max-width:770px}.performance-history{border-top:1px solid #294153;margin-top:23px;padding-top:20px}.performance-history .section-kicker{margin-bottom:12px}.performance-history th{font-size:9px}.performance-history td{font-size:10px;padding:13px}
 @media(max-width:1200px){.performance-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:750px){.performance{padding:20px 16px}.performance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.performance-actions{width:100%}.performance-actions label{flex:1}.performance-actions select{width:100%}.performance-actions .button-primary{flex:1}.performance-bottom{flex-direction:column;align-items:flex-start}.performance-metric strong{font-size:24px}}
+
+
+/* Phase 9: structured evidence reporting (existing layout unchanged). */
+.report-center{padding:27px;margin:16px 0;background:linear-gradient(135deg,#0d1e30,#102339)}
+.report-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:20px 0}
+.report-controls label{display:grid;gap:7px;color:#91afc6;font:10px var(--mono)}
+.report-controls select,.report-controls input{background:#102a40;color:#d7edfc;border:1px solid #36526a;border-radius:6px;padding:11px 12px;min-height:40px;color-scheme:dark}
+.report-controls button{min-height:40px;cursor:pointer}
+.report-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.report-cards>div{border:1px solid #31495f;background:#0b1a2b;border-radius:8px;padding:18px;min-width:0}
+.report-cards small{display:block;font:9px var(--mono);color:#8facbe;letter-spacing:.6px;line-height:1.6}
+.report-cards strong{display:block;color:#8ce7fa;font:600 26px var(--mono);margin-top:12px;overflow-wrap:anywhere}
+.report-message{color:#93b0c5;font-size:11px;line-height:1.5;margin:12px 0}
+.report-buttons{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:17px 0}
+.report-buttons a{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;text-decoration:none;border-radius:6px;font-size:11px;font-weight:700}
+.report-buttons a[aria-disabled=true]{opacity:.4;pointer-events:none}
+@media(max-width:850px){.report-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.report-center{padding:20px 16px}.report-controls label{width:100%}.report-controls select,.report-controls input{width:100%}}
+

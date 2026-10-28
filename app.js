@@ -458,3 +458,52 @@ quitAppButton.addEventListener('click', async () => {
   }
 });
 discoverDesktopControls();
+
+
+// Phase 9: local report selection is independent of the telemetry chart window.
+const reportRange = $('report-range');
+const reportStart = $('report-start');
+const reportEnd = $('report-end');
+function reportQuery() {
+  if (reportRange.value !== 'custom') return `period=${encodeURIComponent(reportRange.value)}`;
+  if (!reportStart.value || !reportEnd.value) throw new Error('Choose both UTC dates.');
+  if (reportStart.value > reportEnd.value) throw new Error('Start date must be before end date.');
+  return `start=${encodeURIComponent(reportStart.value)}&end=${encodeURIComponent(reportEnd.value)}`;
+}
+async function refreshEvidenceReport() {
+  const message = $('report-message');
+  try {
+    const query = reportQuery();
+    const response = await fetch(`/api/reports/summary?${query}`, {cache:'no-store'});
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Report request failed');
+    $('report-incidents').textContent = String(result.confirmed_incidents);
+    $('report-duration').textContent = formatDuration(result.observed_span_seconds);
+    $('report-success').textContent = result.success_rate_pct == null ? '—' : `${number(result.success_rate_pct)}%`;
+    $('report-spikes').textContent = result.spike_count == null ? '—' : String(result.spike_count);
+    $('report-pdf').href = `/api/reports/pdf?${query}`;
+    $('report-csv').href = `/api/reports/csv?${query}`;
+    $('report-pdf').removeAttribute('aria-disabled');
+    $('report-csv').removeAttribute('aria-disabled');
+    message.textContent = `${result.period} · ${result.primary_checks} primary checks · ${result.incidents_in_window} incidents overlap the range`;
+  } catch (error) {
+    message.textContent = `Report: ${error.message}`;
+    $('report-pdf').removeAttribute('href');
+    $('report-csv').removeAttribute('href');
+    $('report-pdf').setAttribute('aria-disabled', 'true');
+    $('report-csv').setAttribute('aria-disabled', 'true');
+  }
+}
+function formatDuration(seconds) {
+  const total = Math.max(0, Math.round(Number(seconds) || 0));
+  if (total >= 3600) return `${(total / 3600).toFixed(1)} h`;
+  if (total >= 60) return `${Math.round(total / 60)} min`;
+  return `${total} sec`;
+}
+reportRange.addEventListener('change', () => {
+  for (const el of document.querySelectorAll('.report-custom')) el.hidden = reportRange.value !== 'custom';
+  if (reportRange.value !== 'custom') refreshEvidenceReport();
+});
+$('report-refresh').addEventListener('click', refreshEvidenceReport);
+refreshEvidenceReport();
+

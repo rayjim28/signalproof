@@ -19,6 +19,7 @@ from pathlib import Path
 
 from performance import PerformanceRunner, create_table
 from quality_signals import summarize_quality
+from evidence_reports import bounds as report_bounds, summarize as summarize_report, public_summary, export_csv as report_csv, export_pdf as report_pdf
 from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parent
@@ -476,6 +477,25 @@ class Handler(BaseHTTPRequestHandler):
         period = parse_qs(url.query).get("period", ["6h"])[0]
         if period not in PERIODS:
             period = "6h"
+        if url.path.startswith("/api/reports/"):
+            try:
+                query = parse_qs(url.query)
+                begin, until, label = report_bounds(query)
+                with connection() as db:
+                    settings_row = db.execute("SELECT slow_connect_ms FROM monitor_settings WHERE id=1").fetchone()
+                    slow = settings_row["slow_connect_ms"] if settings_row else 200
+                    result = summarize_report(db, begin, until, label, slow)
+                if url.path == "/api/reports/summary":
+                    return self.output(public_summary(result))
+                if url.path == "/api/reports/csv":
+                    return self.output(report_csv(result), content_type="text/csv; charset=utf-8",
+                                       headers={"Content-Disposition": 'attachment; filename="signalproof-outage-evidence.csv"'})
+                if url.path == "/api/reports/pdf":
+                    return self.output(report_pdf(result), content_type="application/pdf",
+                                       headers={"Content-Disposition": 'attachment; filename="signalproof-outage-evidence.pdf"'})
+                return self.output({"error": "Not found"}, status=404)
+            except ValueError as error:
+                return self.output({"error": str(error)}, status=400)
         if url.path == "/api/performance":
             return self.output(PERFORMANCE.status())
         if url.path == "/api/performance/export":

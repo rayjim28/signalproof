@@ -106,6 +106,25 @@
         <div class="history-note">The duration is calculated from recorded checks, not measured continuous downtime. It cannot establish ISP responsibility.</div>
       </section>
 
+      <section class="surface report-center" id="report-center" aria-label="Outage evidence reports">
+        <div class="section-top"><div><div class="section-kicker">05 / EVIDENCE REPORTS</div><h2>Outage evidence &amp; reports</h2><p>Generate a timestamped report from saved checks. All reporting dates are UTC.</p></div></div>
+        <div class="report-controls">
+          <label>Reporting range<select id="report-range"><option value="24h">Last 24 hours</option><option value="7d" selected>Last 7 days</option><option value="30d">Last 30 days</option><option value="custom">Custom dates</option></select></label>
+          <label class="report-custom" hidden>Start date (UTC)<input type="date" id="report-start" /></label>
+          <label class="report-custom" hidden>End date (UTC)<input type="date" id="report-end" /></label>
+          <button id="report-refresh" class="button-report" type="button">Update summary</button>
+        </div>
+        <div class="report-cards" aria-live="polite">
+          <div><small>CONFIRMED INCIDENTS</small><strong id="report-incidents">—</strong></div>
+          <div><small>OBSERVED INCIDENT SPAN</small><strong id="report-duration">—</strong></div>
+          <div><small>PRIMARY SUCCESS RATE</small><strong id="report-success">—</strong></div>
+          <div><small>LATENCY SPIKES</small><strong id="report-spikes">—</strong></div>
+        </div>
+        <div id="report-message" class="report-message" role="status">Preparing local report…</div>
+        <div class="report-buttons"><a id="report-pdf" class="button-primary" href="/api/reports/pdf?period=7d" download>Download PDF report</a><a id="report-csv" class="button-report" href="/api/reports/csv?period=7d" download>Download CSV evidence</a></div>
+        <p class="history-note">Reports show recorded checks and confirmed incident windows, not continuously observed downtime or proof of ISP responsibility. Monitoring stays local.</p>
+      </section>
+
       <section class="surface evidence" id="evidence"><div class="section-top evidence-title"><div><div class="section-kicker">04 / EVIDENCE</div><h2>Diagnostic ledger</h2><p>A timestamped record, stored locally on your Mac.</p></div><div class="evidence-actions"><a class="button-report" id="report" href="/api/report?period=6h" target="_blank" rel="noopener">Print report</a><a class="button-download" id="download" href="/api/export?period=6h" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg> Export CSV</a></div></div>
         <div class="ledger-toolbar"><div class="tab-group" role="group" aria-label="Filter measurements"><button type="button" class="selected" data-filter="All">All checks</button><button type="button" data-filter="Internet">Primary</button><button type="button" data-filter="Secondary">Secondary</button><button type="button" data-filter="Gateway">Gateway</button></div><div class="ledger-meta" id="ledger-meta">Loading history…</div></div>
         <div class="table-scroll"><table><thead><tr><th>TIMESTAMP</th><th>TEST</th><th>RESULT</th><th>CONNECT TIME</th><th>METHOD</th></tr></thead><tbody id="evidence-rows"><tr><td colspan="5" class="placeholder-cell">Collecting measurements…</td></tr></tbody></table></div><div class="ledger-footer"><span id="ledger-showing">—</span><button type="button" id="rows-toggle" class="rows-toggle" hidden>Show more records</button></div>
