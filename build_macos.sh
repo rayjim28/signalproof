@@ -49,10 +49,10 @@ python -m PyInstaller \
   --noconfirm --clean --onedir --windowed \
   --name SignalProof \
   --osx-bundle-identifier com.rayjim28.signalproof \
-  --add-data "index.html:." \
-  --add-data "styles.css:." \
-  --add-data "app.js:." \
-  --add-data "favicon.svg:." \
+  --add-data "frontend/index.html:frontend" \
+  --add-data "frontend/styles.css:frontend" \
+  --add-data "frontend/app.js:frontend" \
+  --add-data "frontend/favicon.svg:frontend" \
   "$@" \
   desktop_launcher.py
 

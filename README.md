@@ -126,3 +126,17 @@ I put together a public demo so people can explore SignalProof without installin
 [Try the demo](https://rayjim28.github.io/signalproof/)
 
 The local Python application is the part that measures a real connection and saves its history.
+
+<!-- LAYERED_STRUCTURE -->
+## Source code layout
+
+- `frontend/` — the installed app's real HTML, CSS, JavaScript and favicon.
+- `middleware/http_security.py` — HTTP Host and Origin checks for the localhost API.
+- `backend/` — Python monitoring, SQLite access, quality analysis, and reports.
+- `app.py` and the other root Python module files — small compatibility entry points for the existing CLI and tests.
+- `desktop_launcher.py` — macOS application bootstrap; `build_macos.sh` bundles the new frontend path.
+- `docs/` — separately hosted, sample-data browser demo (not the desktop frontend).
+
+Run `python3 -m unittest discover -s tests -q`, then `python3 app.py` and open http://127.0.0.1:8765.
+For the Mac application, also run `bash build_macos.sh`, reopen `dist/SignalProof.app`, and test quit / duplicate launches.
+The SQLite database and macOS Application Support data are not moved by this reorganization.
