@@ -299,8 +299,8 @@ def get_data(window="6h"):
             "WHERE checked_at>=? ORDER BY id DESC LIMIT 900", (since,)
         )]
         rows = db.execute(
-            "SELECT target,COUNT(*) total,SUM(online) successful," 
-            "SUM(CASE WHEN online=0 THEN 1 ELSE 0 END) failures," 
+            "SELECT target,COUNT(*) total,SUM(online) successful,"
+            "SUM(CASE WHEN online=0 THEN 1 ELSE 0 END) failures,"
             "AVG(CASE WHEN online=1 THEN latency_ms END) avg_latency "
             "FROM measurements WHERE checked_at>=? GROUP BY target", (since,)
         ).fetchall()
